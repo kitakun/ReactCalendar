@@ -1,0 +1,62 @@
+@use "sass:math";
+$days-in-week: 7;
+$day-block-margin: 5;
+
+// colors
+$default-color: rgb(198, 225, 235);
+
+.calendar-content {
+  .calendar-title {
+    font-weight: bold;
+    text-align: center;
+  }
+  .calendar-layout {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .calendar-day {
+      $calendar-day-percents: math.div(1, $days-in-week);
+      flex: 1 0
+        calc(
+          #{math.percentage($calendar-day-percents)} - #{$day-block-margin * 2}px
+        );
+      margin: #{$day-block-margin}px;
+      padding: 4px;
+      height: 100px;
+      background-color: $default-color;
+      overflow: hidden;
+
+      &-empty {
+        @extend .calendar-day;
+        background-color: rgba($default-color, 0.4);
+      }
+
+      &.clickable {
+        &:hover {
+          cursor: pointer;
+          background-color: darken($default-color, 1.7);
+        }
+      }
+
+      .title {
+        margin-bottom: 2px;
+        font-weight: bold;
+      }
+
+      $plan-background-color: #8da8d954;
+      .plan {
+        background-color: $plan-background-color;
+        margin-bottom: 3px;
+        border-radius: 4px;
+        border: 1px solid $plan-background-color;
+
+        &:hover {
+          cursor: pointer;
+          background-color: lighten($color: $plan-background-color, $amount: 4);
+          border: 1px solid darken($color: $plan-background-color, $amount: 4);
+        }
+      }
+    }
+  }
+}
